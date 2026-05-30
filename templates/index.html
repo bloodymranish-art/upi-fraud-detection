@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Paytm Sentinel | UPI Fraud Detection Dashboard</title>
+<script src="https://mockitt.com/agent-py/static/source/js/tailwindcss.3.4.3.js"></script>
+<script src="https://mockitt.com/agent-py/static/source/js/iconify-icon.min.1.0.7.js"></script>
+<script src="https://mockitt.com/agent-py/static/source/js/echarts.min.5.4.3.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    body { font-family: 'Inter', sans-serif; background-color: #F5F7FA; }
+    .paytm-blue { color: #002E6E; }
+    .paytm-bg-blue { background-color: #002E6E; }
+    .paytm-sky { color: #00B9F1; }
+    .paytm-bg-sky { background-color: #00B9F1; }
+    .card-shadow { box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .transition-all-300 { transition: all 0.3s ease; }
+    input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 18px;
+        height: 18px;
+        background: #00B9F1;
+        cursor: pointer;
+        border-radius: 50%;
+    }
+</style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+<nav class="paytm-bg-blue text-white sticky top-0 z-50 shadow-md">
+    <div class="max-w-[1440px] mx-auto px-6 h-16 flex items-center justify-between">
+        <div class="flex items-center space-x-8">
+            <div class="flex items-center space-x-2">
+                <div class="bg-white p-1 rounded-md">
+                    <iconify-icon icon="logos:paytm" width="60"></iconify-icon>
+                </div>
+                <span class="text-xl font-bold tracking-tight border-l border-white/20 pl-4 ml-2">SENTINEL</span>
+            </div>
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a class="text-white border-b-2 border-white pb-1" href="/">Dashboard</a>
+                <a class="text-white/70 hover:text-white transition-colors" href="/history">Transaction Logs</a>
+                <a class="text-white/70 hover:text-white transition-colors" href="/settings">Security Rules</a>
+                <a class="text-white/70 hover:text-white transition-colors" href="#">ML Models</a>
+                <a class="text-white/70 hover:text-white transition-colors" href="#">API Docs</a>
+            </div>
+        </div>
+        <div class="flex items-center space-x-4">
+            <div class="relative">
+                <iconify-icon class="text-white/80 cursor-pointer" icon="mdi:bell-outline" width="24"></iconify-icon>
+                <span class="absolute -top-1 -right-1 bg-red-500 text-[10px] px-1 rounded-full">12</span>
+            </div>
+            <div class="flex items-center space-x-2 bg-white/10 px-3 py-1.5 rounded-full cursor-pointer hover:bg-white/20 transition-all">
+                <img alt="User Profile" class="w-6 h-6 rounded-full border border-white/30" src="https://mockitt.com/agent-py/media/generated_images/2026-04-27/232ecc00ff584df6ad25c37fa134e566.jpg">
+                <span class="text-xs font-medium">Admin Node #204</span>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main class="flex-grow max-w-[1440px] mx-auto w-full px-6 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="bg-white p-6 rounded-2xl card-shadow border-l-4 border-[#00B9F1]">
+            <div class="flex justify-between items-start">
+                <div>
+                    <p class="text-slate-500 text-sm font-medium">Total Scanned Today</p>
+                    <h3 class="text-2xl font-bold paytm-blue mt-1">1,284,050</h3>
+                    <p class="text-green-500 text-xs mt-2 flex items-center">
+                        <iconify-icon class="mr-1" icon="mdi:trending-up"></iconify-icon> +12.5% from yesterday
+                    </p>
+                </div>
+                <div class="bg-sky-50 p-3 rounded-xl">
+                    <iconify-icon class="paytm-sky" icon="mdi:shield-search" width="28"></iconify-icon>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl card-shadow border-l-4 border-[#EF4E28]">
+            <div class="flex justify-between items-start">
+                <div>
+                    <p class="text-slate-500 text-sm font-medium">Fraud Blocked</p>
+                    <h3 class="text-2xl font-bold paytm-blue mt-1">4,210</h3>
+                    <p class="text-red-500 text-xs mt-2 flex items-center">
+                        <iconify-icon class="mr-1" icon="mdi:alert-circle"></iconify-icon> High volatility detected
+                    </p>
+                </div>
+                <div class="bg-red-50 p-3 rounded-xl">
+                    <iconify-icon class="text-red-500" icon="mdi:security-off" width="28"></iconify-icon>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl card-shadow border-l-4 border-[#FFB400]">
+            <div class="flex justify-between items-start">
+                <div>
+                    <p class="text-slate-500 text-sm font-medium">Fraud Detection Rate</p>
+                    <h3 class="text-2xl font-bold paytm-blue mt-1">0.33%</h3>
+                    <p class="text-slate-400 text-xs mt-2">Benchmark: 0.45% (Sector Avg)</p>
+                </div>
+                <div class="bg-orange-50 p-3 rounded-xl">
+                    <iconify-icon class="text-orange-500" icon="mdi:chart-pie" width="28"></iconify-icon>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl card-shadow border-l-4 border-[#00B050]">
+            <div class="flex justify-between items-start">
+                <div>
+                    <p class="text-slate-500 text-sm font-medium">Avg Resolution Time</p>
+                    <h3 class="text-2xl font-bold paytm-blue mt-1">1.2s</h3>
+                    <p class="text-green-500 text-xs mt-2 flex items-center">
+                        <iconify-icon class="mr-1" icon="mdi:clock-fast"></iconify-icon> Faster than target (2.0s)
+                    </p>
+                </div>
+                <div class="bg-green-50 p-3 rounded-xl">
+                    <iconify-icon class="text-green-600" icon="mdi:flash" width="28"></iconify-icon>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div class="lg:col-span-7 space-y-8">
+            <div class="bg-white p-8 rounded-2xl card-shadow">
+                <div class="flex items-center space-x-3 mb-6">
+                    <iconify-icon class="paytm-sky" icon="mdi:file-search-outline" width="28"></iconify-icon>
+                    <h2 class="text-xl font-bold paytm-blue">Transaction Risk Profiler</h2>
+                </div>
+
+                <form class="space-y-6" id="analysisForm" onsubmit="return false;">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-1">
+                            <label class="text-sm font-semibold text-slate-700">Transaction Amount (₹)</label>
+                            <input id="amount" name="amount" class="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#00B9F1] focus:border-transparent outline-none transition-all" placeholder="e.g. 15000" type="number">
+                            <p class="text-[11px] text-[#506D85]">Checks if payment value is significantly higher than typical daily spending.</p>
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="text-sm font-semibold text-slate-700">Session Duration (Seconds)</label>
+                            <input id="session_duration" name="session_duration" class="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#00B9F1] focus:border-transparent outline-none transition-all" placeholder="e.g. 45" type="number">
+                            <p class="text-[11px] text-[#506D85]">Short sessions can indicate automated scripts or bots.</p>
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="text-sm font-semibold text-slate-700">Auth Attempts</label>
+                            <select id="authentication_attempts" name="authentication_attempts" class="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#00B9F1] outline-none">
+                                <option value="1">1 (Normal)</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4+</option>
+                            </select>
+                            <p class="text-[11px] text-[#506D85]">Multiple failures may suggest someone is guessing the code.</p>
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="text-sm font-semibold text-slate-700">Receiver Account Age (Days)</label>
+                            <input id="receiver_account_age" name="receiver_account_age" class="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#00B9F1] outline-none" placeholder="e.g. 365" type="number">
+                            <p class="text-[11px] text-[#506D85]">Scammers often use brand-new accounts created within 24h.</p>
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="text-sm font-semibold text-slate-700">Geographic Disparity (km)</label>
+                            <input id="geographic_disparity" name="geographic_disparity" class="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#00B9F1] outline-none" placeholder="e.g. 12" type="number">
+                            <p class="text-[11px] text-[#506D85]">Distance from last transaction. Alerts if travel seems impossible.</p>
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="text-sm font-semibold text-slate-700">Transaction Time of Day</label>
+                            <input id="transaction_time_of_day" name="transaction_time_of_day" class="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#00B9F1] outline-none" type="time">
+                            <p class="text-[11px] text-[#506D85]">Checks for payments at unusual hours (e.g. 3 AM).</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-slate-100">
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
+                            <div>
+                                <p class="text-sm font-semibold text-slate-700">Unusual Device</p>
+                                <p class="text-[10px] text-[#506D85]">New/unauthorized phone</p>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input id="unusual_device_flag" class="sr-only peer" type="checkbox">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#00B9F1]"></div>
+                            </label>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
+                            <div>
+                                <p class="text-sm font-semibold text-slate-700">Unusual IP</p>
+                                <p class="text-[10px] text-[#506D85]">Unknown network/VPN</p>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input id="unusual_ip_flag" class="sr-only peer" type="checkbox">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#00B9F1]"></div>
+                            </label>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
+                            <div>
+                                <p class="text-sm font-semibold text-slate-700">Unusual Location</p>
+                                <p class="text-[10px] text-[#506D85]">New city/country</p>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input id="unusual_location_flag" class="sr-only peer" type="checkbox">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#00B9F1]"></div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex justify-between">
+                            <label class="text-sm font-semibold text-slate-700">Transaction Velocity</label>
+                            <span class="text-sm font-bold paytm-sky" id="velocityValue">4 Payments/min</span>
+                        </div>
+                        <input id="transaction_velocity" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" max="20" min="1" oninput="document.getElementById('velocityValue').innerText = this.value + ' Payments/min'" type="range" value="4">
+                        <p class="text-[11px] text-[#506D85]">Multiple payments in seconds often signal bot activity or script-based fraud.</p>
+                    </div>
+
+                    <button class="w-full paytm-bg-sky hover:bg-[#009ED1] text-white font-bold py-3.5 rounded-xl transition-all flex items-center justify-center space-x-2 shadow-lg shadow-sky-200" onclick="simulateAnalysis()" type="button" id="analyzeBtn">
+                        <iconify-icon icon="mdi:lightning-bolt" width="20"></iconify-icon>
+                        <span>Analyze Transaction Reliability</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="lg:col-span-5 space-y-8">
+            <div class="hidden space-y-6" id="resultsPanel">
+                <div class="bg-white p-8 rounded-2xl card-shadow border-t-8 border-[#00B050]" id="riskCard">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-bold paytm-blue">Analysis Results</h2>
+                        <span class="bg-green-100 text-green-700 px-4 py-1.5 rounded-full text-xs font-bold tracking-wide" id="riskLabel">LOW RISK</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="w-full h-64" id="gaugeChart"></div>
+                        <p class="text-slate-500 text-sm text-center -mt-4">
+                            Our ensemble models are <span class="font-bold text-slate-800" id="confidenceText">98.4%</span> confident about this assessment.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl card-shadow">
+                    <h3 class="text-sm font-bold paytm-blue mb-4 flex items-center">
+                        <iconify-icon class="mr-2" icon="mdi:chart-bar"></iconify-icon> Cross-Model Confidence Scores
+                    </h3>
+                    <div class="w-full h-48" id="modelChart"></div>
+                </div>
+            </div>
+
+            <div class="bg-white p-8 rounded-2xl card-shadow flex flex-col items-center justify-center text-center space-y-4" id="placeholderPanel">
+                <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center">
+                    <iconify-icon class="text-slate-300" icon="mdi:shield-check-outline" width="40"></iconify-icon>
+                </div>
+                <h3 class="font-bold text-slate-700">Ready for Analysis</h3>
+                <p class="text-sm text-slate-400 max-w-[280px]">Fill in the transaction details to the left and click analyze to run our 2026 AI Sentinel models.</p>
+            </div>
+
+            <div class="bg-[#002E6E] text-white p-6 rounded-2xl card-shadow relative overflow-hidden">
+                <iconify-icon class="absolute -bottom-4 -right-4 text-white/10" icon="mdi:security" width="100"></iconify-icon>
+                <h3 class="font-bold mb-3 flex items-center">
+                    <iconify-icon class="mr-2 text-yellow-400" icon="mdi:lightbulb-on"></iconify-icon> Expert Security Tip
+                </h3>
+                <p class="text-xs text-white/80 leading-relaxed">
+                    Fraud patterns in 2026 show a 40% increase in 'Account Takeover' via social engineering. Sentinel now tracks touch-dynamics to differentiate between legitimate users and bot emulation.
+                </p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="bg-white border-t border-slate-200 py-10 mt-12">
+    <div class="max-w-[1440px] mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="col-span-1 md:col-span-1">
+                <iconify-icon class="mb-4" icon="logos:paytm" width="100"></iconify-icon>
+                <p class="text-xs text-slate-500 leading-relaxed">
+                    Sentinel is the official fraud detection engine for Paytm UPI ecosystem, processing over 10M transactions daily with 99.99% accuracy.
+                </p>
+            </div>
+            <div>
+                <h4 class="font-bold paytm-blue text-sm mb-4">Resources</h4>
+                <ul class="text-xs text-slate-500 space-y-2">
+                    <li><a class="hover:text-[#00B9F1]" href="#">Developer Portal</a></li>
+                    <li><a class="hover:text-[#00B9F1]" href="#">API Documentation</a></li>
+                    <li><a class="hover:text-[#00B9F1]" href="#">Security Whitepapers</a></li>
+                    <li><a class="hover:text-[#00B9F1]" href="#">Compliance Reports</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold paytm-blue text-sm mb-4">Company</h4>
+                <ul class="text-xs text-slate-500 space-y-2">
+                    <li><a class="hover:text-[#00B9F1]" href="#">About One97</a></li>
+                    <li><a class="hover:text-[#00B9F1]" href="#">Privacy Policy</a></li>
+                    <li><a class="hover:text-[#00B9F1]" href="#">Terms of Service</a></li>
+                    <li><a class="hover:text-[#00B9F1]" href="#">Bug Bounty</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold paytm-blue text-sm mb-4">Support</h4>
+                <ul class="text-xs text-slate-500 space-y-2">
+                    <li><a class="hover:text-[#00B9F1]" href="#">24/7 Hotline</a></li>
+                    <li><a class="hover:text-[#00B9F1]" href="#">Contact Sales</a></li>
+                    <li><a class="hover:text-[#00B9F1]" href="#">System Status</a></li>
+                    <li class="pt-2 flex space-x-3">
+                        <iconify-icon class="hover:text-[#00B9F1] cursor-pointer" icon="mdi:twitter" width="18"></iconify-icon>
+                        <iconify-icon class="hover:text-[#00B9F1] cursor-pointer" icon="mdi:linkedin" width="18"></iconify-icon>
+                        <iconify-icon class="hover:text-[#00B9F1] cursor-pointer" icon="mdi:github" width="18"></iconify-icon>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt-10 pt-6 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center text-[10px] text-slate-400 uppercase tracking-widest">
+            <span>© 2026 ONE97 COMMUNICATIONS LTD. ALL RIGHTS RESERVED.</span>
+            <span class="mt-2 md:mt-0">LAST SYSTEM SYNC: APRIL 27, 2026 14:32:01 IST</span>
+        </div>
+    </div>
+</footer>
+
+<script>
+let gaugeChartInstance = null;
+let modelChartInstance = null;
+
+function getNumber(id, fallback = 0) {
+    const el = document.getElementById(id);
+    if (!el || el.value === "" || el.value === null || el.value === undefined) return fallback;
+    return Number(el.value);
+}
+
+function timeToHours(timeStr) {
+    if (!timeStr) return 0;
+    const [hh, mm] = timeStr.split(":").map(Number);
+    return (hh || 0) + ((mm || 0) / 60);
+}
+
+async function simulateAnalysis() {
+    const btn = document.getElementById("analyzeBtn");
+    const placeholder = document.getElementById("placeholderPanel");
+    const results = document.getElementById("resultsPanel");
+
+    btn.disabled = true;
+    btn.innerHTML = '<iconify-icon icon="mdi:loading" width="20" class="animate-spin"></iconify-icon><span>Running ML Models...</span>';
+
+    const payload = {
+        amount: getNumber("amount"),
+        session_duration: getNumber("session_duration"),
+        authentication_attempts: getNumber("authentication_attempts", 1),
+        receiver_account_age: getNumber("receiver_account_age"),
+        geographic_disparity: getNumber("geographic_disparity"),
+        transaction_time_of_day: timeToHours(document.getElementById("transaction_time_of_day").value),
+        unusual_device_flag: document.getElementById("unusual_device_flag").checked ? 1 : 0,
+        unusual_ip_flag: document.getElementById("unusual_ip_flag").checked ? 1 : 0,
+        unusual_location_flag: document.getElementById("unusual_location_flag").checked ? 1 : 0,
+        transaction_velocity: getNumber("transaction_velocity", 4)
+    };
+
+    try {
+        const res = await fetch("/predict", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ features: payload })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok || data.error) {
+            throw new Error(data.error || "Prediction failed");
+        }
+
+        placeholder.classList.add("hidden");
+        results.classList.remove("hidden");
+
+        const confidencePct = (Number(data.confidence) * 100).toFixed(1);
+        document.getElementById("confidenceText").innerText = confidencePct + "%";
+
+        const riskLabel = document.getElementById("riskLabel");
+        const riskCard = document.getElementById("riskCard");
+
+        if (data.prediction === "Fraud") {
+            riskLabel.className = "bg-red-100 text-red-700 px-4 py-1.5 rounded-full text-xs font-bold tracking-wide";
+            riskLabel.innerText = "HIGH RISK";
+            riskCard.style.borderTopColor = "#EF4E28";
+        } else {
+            riskLabel.className = "bg-green-100 text-green-700 px-4 py-1.5 rounded-full text-xs font-bold tracking-wide";
+            riskLabel.innerText = "LOW RISK";
+            riskCard.style.borderTopColor = "#00B050";
+        }
+
+        renderCharts(Number(confidencePct), data.model_scores);
+
+    } catch (err) {
+        alert("Error: " + err.message);
+        console.error(err);
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<iconify-icon icon="mdi:lightning-bolt" width="20"></iconify-icon><span>Analyze Transaction Reliability</span>';
+    }
+}
+
+function renderCharts(confidencePct, modelScores) {
+    if (gaugeChartInstance) gaugeChartInstance.dispose();
+    if (modelChartInstance) modelChartInstance.dispose();
+
+    gaugeChartInstance = echarts.init(document.getElementById("gaugeChart"));
+    modelChartInstance = echarts.init(document.getElementById("modelChart"));
+
+    gaugeChartInstance.setOption({
+        series: [{
+            type: "gauge",
+            startAngle: 180,
+            endAngle: 0,
+            min: 0,
+            max: 100,
+            splitNumber: 5,
+            itemStyle: {
+                color: "#00B9F1",
+                shadowColor: "rgba(0,185,241,0.3)",
+                shadowBlur: 10,
+                shadowOffsetX: 2,
+                shadowOffsetY: 2
+            },
+            progress: { show: true, roundCap: true, width: 18 },
+            pointer: {
+                icon: "path://M12.8,0.7l12,40.1H0.7L12.8,0.7z",
+                length: "12%",
+                width: 20,
+                offsetCenter: [0, "-60%"],
+                itemStyle: { color: "auto" }
+            },
+            axisLine: { roundCap: true, lineStyle: { width: 18 } },
+            axisTick: { show: false },
+            splitLine: { show: false },
+            axisLabel: { show: false },
+            title: { show: false },
+            detail: {
+                offsetCenter: [0, "-10%"],
+                valueAnimation: true,
+                formatter: function (value) { return "{value|" + value.toFixed(0) + "}{unit|%}"; },
+                rich: {
+                    value: { fontSize: 40, fontWeight: "700", color: "#002E6E" },
+                    unit: { fontSize: 20, color: "#002E6E", padding: [0, 0, -10, 5] }
+                }
+            },
+            data: [{ value: confidencePct, name: "Reliability Score" }]
+        }]
+    });
+
+    modelChartInstance.setOption({
+        tooltip: { trigger: "axis", axisPointer: { type: "shadow" } },
+        grid: { top: "5%", left: "3%", right: "4%", bottom: "3%", containLabel: true },
+        xAxis: { type: "value", boundaryGap: [0, 0.01], show: false },
+        yAxis: {
+            type: "category",
+            data: ["Random Forest", "Logistic Reg", "KNN", "Decision Tree", "G-Boosting", "CNN"],
+            axisLine: { show: false },
+            axisTick: { show: false },
+            axisLabel: { color: "#506D85", fontSize: 10, fontWeight: "600" }
+        },
+        series: [{
+            name: "Confidence",
+            type: "bar",
+            data: [
+                (modelScores.random_forest || 0) * 100,
+                (modelScores.logistic_regression || 0) * 100,
+                (modelScores.knn || 0) * 100,
+                (modelScores.decision_tree || 0) * 100,
+                (modelScores.gradient_boosting || 0) * 100,
+                (modelScores.cnn || 0) * 100
+            ],
+            itemStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                    { offset: 0, color: "#00B9F1" },
+                    { offset: 1, color: "#002E6E" }
+                ]),
+                borderRadius: [0, 4, 4, 0]
+            },
+            barWidth: 12
+        }]
+    });
+
+    window.addEventListener("resize", () => {
+        if (gaugeChartInstance) gaugeChartInstance.resize();
+        if (modelChartInstance) modelChartInstance.resize();
+    }, { once: true });
+}
+</script>
+
+</body>
+</html>

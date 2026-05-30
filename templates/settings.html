@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Security Rules | Paytm Sentinel</title>
+<script src="https://mockitt.com/agent-py/static/source/js/tailwindcss.3.4.3.js"></script>
+<script src="https://mockitt.com/agent-py/static/source/js/iconify-icon.min.1.0.7.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    body { font-family: 'Inter', sans-serif; background-color: #F5F7FA; }
+    .paytm-blue { color: #002E6E; }
+    .paytm-bg-blue { background-color: #002E6E; }
+    .paytm-sky { color: #00B9F1; }
+    .card-shadow { box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+</style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+<nav class="paytm-bg-blue text-white sticky top-0 z-50 shadow-md">
+    <div class="max-w-[1440px] mx-auto px-6 h-16 flex items-center justify-between">
+        <div class="flex items-center space-x-8">
+            <div class="flex items-center space-x-2">
+                <div class="bg-white p-1 rounded-md">
+                    <iconify-icon icon="logos:paytm" width="60"></iconify-icon>
+                </div>
+                <span class="text-xl font-bold tracking-tight border-l border-white/20 pl-4 ml-2">SENTINEL</span>
+            </div>
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a class="text-white/70 hover:text-white transition-colors" href="/">Dashboard</a>
+                <a class="text-white/70 hover:text-white transition-colors" href="/history">Transaction Logs</a>
+                <a class="text-white border-b-2 border-white pb-1" href="/settings">Security Rules</a>
+                <a class="text-white/70 hover:text-white transition-colors" href="/login">Sign In</a>
+                <a class="text-white/70 hover:text-white transition-colors" href="#">ML Models</a>
+                <a class="text-white/70 hover:text-white transition-colors" href="#">API Docs</a>
+            </div>
+        </div>
+        <div class="flex items-center space-x-4">
+            <iconify-icon class="text-white/70 cursor-pointer" icon="mdi:magnify" width="22"></iconify-icon>
+            <div class="flex items-center space-x-2 bg-white/10 px-3 py-1.5 rounded-full">
+                <img alt="User" class="w-6 h-6 rounded-full" src="https://mockitt.com/agent-py/media/generated_images/2026-04-27/3d9e8ed3eef74ec98c5be538a7e891cc.jpg">
+                <span class="text-xs font-medium">Node Admin</span>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main class="flex-grow max-w-[1440px] mx-auto w-full px-6 py-8">
+    <div class="mb-8">
+        <h1 class="text-2xl font-bold paytm-blue">ML Thresholds &amp; Security Rules</h1>
+        <p class="text-slate-500 text-sm mt-1">Configure automated response triggers and model sensitivity levels.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2 space-y-6">
+            <div class="bg-white p-8 rounded-2xl card-shadow">
+                <h2 class="text-lg font-bold paytm-blue mb-6 flex items-center">
+                    <iconify-icon class="mr-2 text-[#00B9F1]" icon="mdi:tune"></iconify-icon> AI Confidence Thresholds
+                </h2>
+
+                <div class="space-y-8">
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <label class="text-sm font-bold text-slate-700">Auto-Block Confidence (%)</label>
+                            <span class="bg-red-50 text-red-600 px-3 py-1 rounded-lg text-xs font-bold">95.0%</span>
+                        </div>
+                        <input class="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-[#EF4E28]" type="range">
+                        <p class="text-[11px] text-slate-400 italic">Sentinel will automatically block any transaction with a fraud probability higher than this value.</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <label class="text-sm font-bold text-slate-700">Manual Review Trigger (%)</label>
+                            <span class="bg-orange-50 text-orange-600 px-3 py-1 rounded-lg text-xs font-bold">75.0%</span>
+                        </div>
+                        <input class="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-[#FFB400]" type="range">
+                        <p class="text-[11px] text-slate-400 italic">Transactions in the "Gray Zone" (75% - 95%) are routed to the 24/7 Security Operations Center.</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <label class="text-sm font-bold text-slate-700">Soft Flag Notification (%)</label>
+                            <span class="bg-blue-50 text-blue-600 px-3 py-1 rounded-lg text-xs font-bold">60.0%</span>
+                        </div>
+                        <input class="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-[#00B9F1]" type="range">
+                        <p class="text-[11px] text-slate-400 italic">Triggers an in-app verification prompt for the user (e.g., biometric check).</p>
+                    </div>
+                </div>
+
+                <div class="mt-8 pt-6 border-t border-slate-100 flex justify-end space-x-3">
+                    <button class="px-6 py-2 text-sm font-bold text-slate-400 hover:text-slate-600" type="button">Reset to Defaults</button>
+                    <button class="px-6 py-2 bg-[#002E6E] text-white text-sm font-bold rounded-lg hover:bg-[#001D47] transition-all" type="button">Save Changes</button>
+                </div>
+            </div>
+
+            <div class="bg-white p-8 rounded-2xl card-shadow">
+                <h2 class="text-lg font-bold paytm-blue mb-6">Conditional Hard Rules</h2>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-4 border border-slate-100 rounded-xl hover:border-sky-100 transition-all cursor-pointer">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-10 h-10 bg-sky-50 rounded-lg flex items-center justify-center text-[#00B9F1]">
+                                <iconify-icon icon="mdi:clock-alert" width="24"></iconify-icon>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-slate-700">Midnight Lockdown</p>
+                                <p class="text-[11px] text-slate-400">Reduce P2P limits by 50% between 01:00 AM - 05:00 AM.</p>
+                            </div>
+                        </div>
+                        <iconify-icon class="text-[#00B9F1]" icon="mdi:toggle-switch" width="32"></iconify-icon>
+                    </div>
+
+                    <div class="flex items-center justify-between p-4 border border-slate-100 rounded-xl hover:border-sky-100 transition-all cursor-pointer">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-10 h-10 bg-sky-50 rounded-lg flex items-center justify-center text-[#00B9F1]">
+                                <iconify-icon icon="mdi:account-new" width="24"></iconify-icon>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-slate-700">New Account Quarantine</p>
+                                <p class="text-[11px] text-slate-400">Strict velocity limits for accounts &lt; 7 days old.</p>
+                            </div>
+                        </div>
+                        <iconify-icon class="text-[#00B9F1]" icon="mdi:toggle-switch" width="32"></iconify-icon>
+                    </div>
+
+                    <div class="flex items-center justify-between p-4 border border-slate-100 rounded-xl hover:border-sky-100 transition-all cursor-pointer">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-10 h-10 bg-sky-50 rounded-lg flex items-center justify-center text-[#00B9F1]">
+                                <iconify-icon icon="mdi:map-marker-off" width="24"></iconify-icon>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-slate-700">Geo-Fence Redzone</p>
+                                <p class="text-[11px] text-slate-400">Auto-block transactions from high-risk blacklist countries.</p>
+                            </div>
+                        </div>
+                        <iconify-icon class="text-slate-300" icon="mdi:toggle-switch-off" width="32"></iconify-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="space-y-6">
+            <div class="bg-[#002E6E] text-white p-8 rounded-2xl card-shadow">
+                <h3 class="font-bold text-lg mb-4">Engine Status</h3>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="text-white/60">Active Model</span>
+                        <span class="font-bold">Paytm-BERT v4.2</span>
+                    </div>
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="text-white/60">Training Drift</span>
+                        <span class="text-green-400 font-bold">0.02% (Stable)</span>
+                    </div>
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="text-white/60">Last Training</span>
+                        <span class="font-bold">6h 12m ago</span>
+                    </div>
+                </div>
+                <button class="w-full mt-6 py-2 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg text-xs font-bold transition-all" type="button">
+                    RUN PERFORMANCE AUDIT
+                </button>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl card-shadow">
+                <h4 class="font-bold paytm-blue text-sm mb-4">Notification Hooks</h4>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-slate-500 italic">Slack Webhook</span>
+                        <span class="text-[10px] font-bold text-green-600 bg-green-50 px-2 rounded">CONNECTED</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-slate-500 italic">PagerDuty API</span>
+                        <span class="text-[10px] font-bold text-green-600 bg-green-50 px-2 rounded">CONNECTED</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-slate-500 italic">SMS Gateway</span>
+                        <span class="text-[10px] font-bold text-slate-400 bg-slate-50 px-2 rounded">DISABLED</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="bg-white border-t border-slate-200 py-6 mt-12">
+    <div class="max-w-[1440px] mx-auto px-6 text-center text-[10px] text-slate-400 uppercase tracking-widest">
+        PAYTM SENTINEL SECURITY ENGINE v4.2.1-STABLE
+    </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Transaction History | Paytm Sentinel</title>
+<script src="https://mockitt.com/agent-py/static/source/js/tailwindcss.3.4.3.js"></script>
+<script src="https://mockitt.com/agent-py/static/source/js/iconify-icon.min.1.0.7.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    body { font-family: 'Inter', sans-serif; background-color: #F5F7FA; }
+    .paytm-blue { color: #002E6E; }
+    .paytm-bg-blue { background-color: #002E6E; }
+    .paytm-sky { color: #00B9F1; }
+    .card-shadow { box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+</style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+<nav class="paytm-bg-blue text-white sticky top-0 z-50 shadow-md">
+    <div class="max-w-[1440px] mx-auto px-6 h-16 flex items-center justify-between">
+        <div class="flex items-center space-x-8">
+            <div class="flex items-center space-x-2">
+                <div class="bg-white p-1 rounded-md">
+                    <iconify-icon icon="logos:paytm" width="60"></iconify-icon>
+                </div>
+                <span class="text-xl font-bold tracking-tight border-l border-white/20 pl-4 ml-2">SENTINEL</span>
+            </div>
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a class="text-white/70 hover:text-white transition-colors" href="/">Dashboard</a>
+                <a class="text-white border-b-2 border-white pb-1" href="/history">Transaction Logs</a>
+                <a class="text-white/70 hover:text-white transition-colors" href="/settings">Security Rules</a>
+                <a class="text-white/70 hover:text-white transition-colors" href="/login">Sign In</a>
+                <a class="text-white/70 hover:text-white transition-colors" href="#">ML Models</a>
+                <a class="text-white/70 hover:text-white transition-colors" href="#">API Docs</a>
+            </div>
+        </div>
+        <div class="flex items-center space-x-4">
+            <div class="relative">
+                <iconify-icon class="text-white/80 cursor-pointer" icon="mdi:bell-outline" width="24"></iconify-icon>
+                <span class="absolute -top-1 -right-1 bg-red-500 text-[10px] px-1 rounded-full">12</span>
+            </div>
+            <div class="flex items-center space-x-2 bg-white/10 px-3 py-1.5 rounded-full cursor-pointer hover:bg-white/20 transition-all">
+                <img alt="User Profile" class="w-6 h-6 rounded-full border border-white/30" src="https://mockitt.com/agent-py/media/generated_images/2026-04-27/7ff0df1f97b147c0a4e47301a95c5410.jpg">
+                <span class="text-xs font-medium">Admin Node #204</span>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main class="flex-grow max-w-[1440px] mx-auto w-full px-6 py-8">
+    <div class="flex justify-between items-end mb-8">
+        <div>
+            <h1 class="text-2xl font-bold paytm-blue">Transaction Analysis Logs</h1>
+            <p class="text-slate-500 text-sm mt-1">Real-time audit trail of all transactions processed by the Sentinel engine.</p>
+        </div>
+        <div class="flex space-x-3">
+            <button class="flex items-center space-x-2 bg-white px-4 py-2 rounded-lg card-shadow text-sm font-medium text-slate-600 hover:bg-slate-50">
+                <iconify-icon icon="mdi:filter-variant"></iconify-icon>
+                <span>Filter Logs</span>
+            </button>
+            <button class="flex items-center space-x-2 bg-[#00B9F1] px-4 py-2 rounded-lg card-shadow text-sm font-bold text-white hover:bg-[#009ED1]">
+                <iconify-icon icon="mdi:download"></iconify-icon>
+                <span>Export CSV</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-2xl card-shadow overflow-hidden">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-slate-50 border-b border-slate-100">
+                    <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Txn ID / Time</th>
+                    <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">User Account</th>
+                    <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Amount</th>
+                    <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Risk Level</th>
+                    <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Confidence</th>
+                    <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Flag Details</th>
+                    <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">Action</th>
+                </tr>
+            </thead>
+
+            <tbody id="historyBody" class="divide-y divide-slate-100">
+                <tr>
+                    <td class="px-6 py-4 text-sm text-slate-500" colspan="7">Loading history...</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="bg-slate-50 px-6 py-4 flex justify-between items-center border-t border-slate-100">
+            <span class="text-xs text-slate-500">Showing 1 to 10 of 1,240 entries</span>
+            <div class="flex space-x-2">
+                <button class="w-8 h-8 rounded border border-slate-200 flex items-center justify-center text-slate-400 hover:bg-white"><iconify-icon icon="mdi:chevron-left"></iconify-icon></button>
+                <button class="w-8 h-8 rounded bg-[#00B9F1] text-white flex items-center justify-center text-xs font-bold">1</button>
+                <button class="w-8 h-8 rounded border border-slate-200 flex items-center justify-center text-xs text-slate-600 hover:bg-white">2</button>
+                <button class="w-8 h-8 rounded border border-slate-200 flex items-center justify-center text-xs text-slate-600 hover:bg-white">3</button>
+                <span class="text-slate-400">...</span>
+                <button class="w-8 h-8 rounded border border-slate-200 flex items-center justify-center text-xs text-slate-600 hover:bg-white">124</button>
+                <button class="w-8 h-8 rounded border border-slate-200 flex items-center justify-center text-slate-400 hover:bg-white"><iconify-icon icon="mdi:chevron-right"></iconify-icon></button>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="bg-white border-t border-slate-200 py-6 mt-auto">
+    <div class="max-w-[1440px] mx-auto px-6 flex justify-between items-center text-[10px] text-slate-400 uppercase tracking-widest">
+        <span>© 2026 ONE97 COMMUNICATIONS LTD.</span>
+        <span>SYSTEM ENCRYPTED WITH QUANTUM-RSA 4096</span>
+    </div>
+</footer>
+
+<script>
+async function loadHistory() {
+    const tbody = document.getElementById("historyBody");
+
+    try {
+        const res = await fetch("/history-data");
+        const data = await res.json();
+
+        if (!res.ok) {
+            throw new Error(data.error || "Failed to load history");
+        }
+
+        if (!Array.isArray(data) || data.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td class="px-6 py-4 text-sm text-slate-500" colspan="7">No transaction history found.</td>
+                </tr>
+            `;
+            return;
+        }
+
+        tbody.innerHTML = "";
+
+        data.forEach(txn => {
+            const pred = (txn.prediction || "Real").toLowerCase();
+            let badgeClass = "bg-green-100 text-green-700";
+            let label = "Low Risk";
+
+            if (pred.includes("fraud")) {
+                badgeClass = "bg-red-100 text-red-700";
+                label = "High Fraud";
+            } else if (pred.includes("suspicious")) {
+                badgeClass = "bg-orange-100 text-orange-700";
+                label = "Suspicious";
+            }
+
+            const confidence = typeof txn.confidence === "number"
+                ? (txn.confidence * 100).toFixed(1)
+                : (Number(txn.confidence || 0)).toFixed(1);
+
+            const row = document.createElement("tr");
+            row.className = "hover:bg-slate-50 transition-colors";
+            row.innerHTML = `
+                <td class="px-6 py-4">
+                    <div class="text-sm font-bold paytm-blue">${txn.id || txn.txn_id || "—"}</div>
+                    <div class="text-[10px] text-slate-400">${txn.time || txn.timestamp || "—"}</div>
+                </td>
+                <td class="px-6 py-4">
+                    <div class="text-sm text-slate-700">${txn.user || txn.account || "—"}</div>
+                    <div class="text-[10px] text-slate-400">${txn.device || "—"}</div>
+                </td>
+                <td class="px-6 py-4 font-bold text-sm text-slate-800">₹ ${txn.amount ?? "—"}</td>
+                <td class="px-6 py-4">
+                    <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase ${badgeClass}">
+                        ${label}
+                    </span>
+                </td>
+                <td class="px-6 py-4">
+                    <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden max-w-[60px]">
+                        <div class="${pred.includes('fraud') ? 'bg-red-500' : pred.includes('suspicious') ? 'bg-orange-500' : 'bg-green-500'} h-full" style="width:${Math.max(0, Math.min(100, confidence))}%"></div>
+                    </div>
+                    <div class="text-[10px] text-slate-400 mt-1">${confidence}%</div>
+                </td>
+                <td class="px-6 py-4">
+                    <div class="flex items-center space-x-2 text-[10px] ${pred.includes('fraud') ? 'text-red-600' : pred.includes('suspicious') ? 'text-orange-600' : 'text-green-600'}">
+                        <iconify-icon icon="${pred.includes('fraud') ? 'mdi:alert' : 'mdi:check-circle'}"></iconify-icon>
+                        <span>${txn.flags || txn.flag_details || "No anomalies detected"}</span>
+                    </div>
+                </td>
+                <td class="px-6 py-4 text-right">
+                    <button class="text-slate-400 hover:text-[#00B9F1]">
+                        <iconify-icon icon="mdi:eye" width="20"></iconify-icon>
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(row);
+        });
+
+    } catch (err) {
+        tbody.innerHTML = `
+            <tr>
+                <td class="px-6 py-4 text-sm text-red-500" colspan="7">Error loading history.</td>
+            </tr>
+        `;
+        console.error(err);
+    }
+}
+
+loadHistory();
+</script>
+
+</body>
+</html>
